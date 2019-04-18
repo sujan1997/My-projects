@@ -1,1 +1,1 @@
-
+This php project is about adding events to the calender by using web page where you can enter the event description which is then added to .ics calender file and the event titles are displayed under the respective dates based on the month and year selected. 
