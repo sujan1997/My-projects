@@ -1,0 +1,37 @@
+<?php
+session_start();
+$title= $_SESSION['etitle'];
+$loc = $_SESSION['elocation'];
+$strtdate =$_SESSION['startdate'];
+$strttime =$_SESSION['starttime'];
+$enddate =$_SESSION['enddate'];
+$endtime =$_SESSION['endtime'];
+$cal = file_get_contents('eventsdup.ics');
+$fil = fopen("eventsdup.ics","w");
+#echo $cal;
+$convert = explode("\n",$cal);
+#echo "\n",$convert[0];
+$temp = count($convert)-1;
+$convert[$temp] = "BEGIN:VEVENT";
+$temp++;
+$convert[$temp] = "DTSTART:{$strtdate}";
+$temp++;
+$convert[$temp] = "TSTART:{$strttime}";
+$temp++;
+$convert[$temp] = "DTEND:{$enddate}";
+$temp++;
+$convert[$temp] = "TEND:{$endtime}";
+$temp++;
+$convert[$temp] = "LOCATION:{$loc}";
+$temp++;
+$convert[$temp] = "SUMMARY:{$title}";
+$temp++;
+$convert[$temp] = "END:VEVENT";
+$temp++;
+$convert[$temp] = "END:VCALENDAR";
+$final = implode("\n",$convert);
+#echo $final;
+fwrite($fil,$final);
+echo "Written to file succesfully\n";
+fclose($fil);
+?>
